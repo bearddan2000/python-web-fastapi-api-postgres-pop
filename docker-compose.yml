@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=beverage
+      - POSTGRES_USER=maria
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./db/sql:/docker-entrypoint-initdb.d
+
+  py-srv:
+    build: py-srv
+    command: python app.py
+    ports:
+      - "80:8000"
